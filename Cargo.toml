@@ -1,0 +1,25 @@
+[workspace]
+members = [
+    "domain",
+    "usecase"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[package]
+name = "cli-application"
+version.workspace = true
+edition.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[workspace.dependencies]
+url = "2.5.0"
+rand = "0.8.5"
+thiserror = "1.0.56"
+usecase = { path = "usecase" }
+domain = { path = "domain" }
+
+[dependencies]
+usecase = { path = "usecase" }
