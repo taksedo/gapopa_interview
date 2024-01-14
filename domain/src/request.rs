@@ -10,15 +10,21 @@ impl TryFrom<Vec<String>> for Request {
     type Error = RequestError;
 
     fn try_from(value: Vec<String>) -> Result<Self, Self::Error> {
-        if value.len() != 3 { return Err(RequestError::ArgsQtyError); }
+        if value.len() != 3 {
+            return Err(RequestError::ArgsQtyError);
+        }
 
         let count_interval_argument = value.get(1).unwrap().to_string();
-        let count_interval = IntervalDuration::try_from(count_interval_argument)?;
+        let count_interval =
+            IntervalDuration::try_from(count_interval_argument)?;
 
         let site_name_argument = value.get(2).unwrap().to_string();
         let site_name = SiteName::try_from(site_name_argument)?;
 
-        Ok(Self { interval_duration_millisec: count_interval, site_name })
+        Ok(Self {
+            interval_duration_millisec: count_interval,
+            site_name,
+        })
     }
 }
 
@@ -31,7 +37,7 @@ pub enum RequestError {
 
 #[cfg(test)]
 mod test {
-    use crate::request::{Request, RequestError};
+    use super::*;
 
     #[test]
     fn wrong_interval_duration_argument() {

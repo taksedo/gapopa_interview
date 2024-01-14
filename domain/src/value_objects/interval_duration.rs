@@ -1,5 +1,4 @@
-use std::fmt;
-use std::fmt::Formatter;
+use std::{fmt, fmt::Formatter};
 
 use crate::request::RequestError;
 
@@ -18,8 +17,10 @@ impl TryFrom<String> for IntervalDuration {
 
     fn try_from(value: String) -> Result<Self, Self::Error> {
         match value.parse::<u8>() {
-            Ok(count) => Ok(Self { value: count as u64 * 1000 }),
-            Err(_) => Err(RequestError::IntervalValueError)
+            Ok(count) => Ok(Self {
+                value: count as u64 * 1000,
+            }),
+            Err(_) => Err(RequestError::IntervalValueError),
         }
     }
 }
@@ -38,9 +39,9 @@ impl fmt::Display for IntervalDuration {
 
 #[cfg(test)]
 mod test {
-    use rand::{Rng, thread_rng};
+    use rand::{thread_rng, Rng};
 
-    use crate::value_objects::interval_duration::IntervalDuration;
+    use super::*;
 
     #[test]
     fn create_interval_duration_successful() {

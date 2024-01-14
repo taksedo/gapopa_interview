@@ -33,8 +33,8 @@ impl TryFrom<String> for SiteName {
     fn try_from(value: String) -> Result<Self, Self::Error> {
         let site_name = Url::parse(&value);
         match site_name {
-            Ok(value) => { Ok(Self { value: value }) }
-            Err(_) => Err(RequestError::SiteNameError)
+            Ok(value) => Ok(Self { value }),
+            Err(_) => Err(RequestError::SiteNameError),
         }
     }
 }
@@ -47,7 +47,7 @@ impl fmt::Display for SiteName {
 
 #[cfg(test)]
 mod test {
-    use crate::value_objects::site_name::SiteName;
+    use super::*;
 
     #[test]
     fn create_site_name_successful_without_response_code() {
